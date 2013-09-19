@@ -190,6 +190,8 @@ function dbs_pull() {
 add_action( 'wp_ajax_nopriv_dbs_push', 'dbs_push' );
 function dbs_push() {
 
+	$memory_limit = ini_get( 'memory_limit' );
+	ini_set( 'memory_limit', '80M' );
 
 	dbs_test_for_secret($_REQUEST['secret']);
 	$tokens = dbs_get_tokens();
@@ -214,6 +216,9 @@ function dbs_push() {
 		dbs_restoreOptions( $optionCache );
 
 		echo 'OK';
+
+		ini_set( 'memory_limit', $memory_limit );
+
 	} else {
 		echo 'Error: invalid SQL dump';
 	}
