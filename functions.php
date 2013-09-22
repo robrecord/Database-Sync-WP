@@ -37,11 +37,11 @@ function dbs_stripHttp($url) {
  * Load a series of SQL statements.
  * @param $sql string SQL dump
  */
-function dbs_loadSql($sql) {
+function dbs_loadSql( &$sql ) {
 
-	$sql = dbs_sql_remove_comments($sql);
+	dbs_sql_remove_comments($sql);
 	if ($_REQUEST['table_prefix'])
-		$sql = dbs_sql_localize_tables($sql, $_REQUEST['table_prefix']);
+		dbs_sql_localize_tables($sql, $_REQUEST['table_prefix']);
 	// if ($_REQUEST['url']) $sql = dbs_sql_replace_urls($_REQUEST['url']);
 
 	$queries = explode(";\n", $sql);
@@ -366,34 +366,33 @@ function dbs_remove_table_prefix($table)
 	return substr($table, strlen(dbs_get_table_prefix()));
 }
 
-function dbs_sql_localize_tables($sql, $foreign_table_prefix)
+function dbs_sql_localize_tables( &$sql, $foreign_table_prefix)
 {
 	$local_table_prefix = dbs_get_table_prefix();
-	return dbs_sql_switch_table_prefixes($foreign_table_prefix, $local_table_prefix, $sql);
+	dbs_sql_switch_table_prefixes($foreign_table_prefix, $local_table_prefix, $sql);
 }
 
-function dbs_sql_unlocalize_tables($sql, $foreign_table_prefix)
+function dbs_sql_unlocalize_tables( &$sql, $foreign_table_prefix)
 {
 	$local_table_prefix = dbs_get_table_prefix();
-	return dbs_sql_switch_table_prefixes($local_table_prefix, $foreign_table_prefix, $sql);
+	dbs_sql_switch_table_prefixes($local_table_prefix, $foreign_table_prefix, $sql);
 }
 
-function dbs_sql_switch_table_prefixes($match, $replace, $sql)
+function dbs_sql_switch_table_prefixes($match, $replace, &$sql)
 {
 	$sql = preg_replace("/`{$match}/","`{$replace}", $sql);
 	$sql = preg_replace("/'{$match}user_roles'/","'{$replace}user_roles'", $sql);
-	return $sql;
 }
 
-function dbs_sql_remove_comments($sql)
+function dbs_sql_remove_comments( &$sql)
 {
-	return preg_replace("|/\*.+\*/\n|", "", $sql);
+	$sql = preg_replace("|/\*.+\*/\n|", "", $sql);
 }
 
-function dbs_sql_replace_urls($sql, $foreign_url)
+function dbs_sql_replace_urls( &$sql, $foreign_url)
 {
 	$local_url = get_bloginfo('wpurl');
-	return str_replace($foreign_url, $local_url, $sql);
+	$sql = str_replace($foreign_url, $local_url, $sql);
 }
 
 function dbs_test_for_secret($req_secret) {
