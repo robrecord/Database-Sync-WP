@@ -87,7 +87,7 @@ function dbs_post_actions() {
 				$gotoUrl = dbs_url( array( 'error' => 'Sync failed. Is the plugin activated on the remote server?' ) );
 			} else {
 
-				$sql = $result;
+				$sql = &$result;
 				if ( $sql && preg_match( '|^/\* Dump of database |', $sql ) ) {
 
 					//backup current database

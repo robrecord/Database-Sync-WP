@@ -78,7 +78,7 @@ function dbs_post($url, $action, $params) {
 	$remote = $url . '/wp-admin/admin-ajax.php?action=' . $action . '&api_version=' . DBS_API_VERSION;
 	$ch = curl_init($remote);
 	curl_setopt($ch, CURLOPT_POST, true);
-	curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
+	// curl_setopt($ch, CURLOPT_FRESH_CONNECT, true);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 	curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
 	// curl_setopt($ch, CURLOPT_COOKIE, 'XDEBUG_SESSION=1');
