@@ -1,9 +1,9 @@
 <?php
 /*
-Plugin Name: Database Sync
+Plugin Name: Database Sync RR
 Description: Sync databases across servers with a single click.
-Version: 0.2
-Author: tamlyn
+Version: 0.3
+Author: robrecord (since 0.3) & tamlyn
 */
 
 //What WordPress capability is required to access this plugin?
